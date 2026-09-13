@@ -9,7 +9,7 @@ export default function  Best ( ) {
         <div className=" py-12 px-4 max-w-7xl mx-auto" >
             <div class="w-24 h-1mx-auto mt-2 "></div>
             <div className=" text-4xl font-extrabold text-center py-2 px-8 border-2 border-gray-600/5 bg-gray-600/25 rounded-xl shadow-sm " >
-                <h2 className="  " >Best saler</h2>
+                <h2 className="  " >Best prices</h2>
                 
             </div>
 
@@ -26,7 +26,8 @@ export default function  Best ( ) {
                     </div>
                     ) )};
             </div>
-
+            food 
+            
             
         </div>
 
