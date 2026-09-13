@@ -6,7 +6,7 @@ import Product from '../compounts/Product';
 import Footer from '../compounts/Footer'
 export default function Home() {
     return (
-        <div className="bg-gradient-to-br from-cyan-950 to-cyan-200/50 w-screen min-h-full max-h-full " >
+        <div className="bg-gradient-to-tr from-cyan-950  to-cyan-400 w-screen min-h-full max-h-full " >
             <NavBar/>
             <Hero />
             <Best />
