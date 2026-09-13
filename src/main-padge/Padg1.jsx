@@ -1,4 +1,4 @@
-import NN from '../imgss/NN.jpg';
+
 
 
 export default function Padg1() {
@@ -10,7 +10,7 @@ export default function Padg1() {
 <h2 className=" text-3xl font-mono font-black hover:text-gray-50 "> My profile </h2>
             </div>
             <div className=" bg-indigo-400  w-60 h-screen flex   flex-col gap-3 rounded-sm shadow-xl px-3 py-2 mx-auto justify-center font-extrabold items-center absolute   " >
-                <img src={NN} alt="me loding" className=" w-36  flex justify-start items-start absolute top-0 left-1 rounded-md " /> 
+                
                 <div className=" absolute top-48 left-1 gap-5">
                     <ul> 
                     <li>  cs student</li>

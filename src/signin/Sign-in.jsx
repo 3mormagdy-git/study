@@ -1,5 +1,5 @@
 import { useState } from "react";
-import Pro from '../imgss/Pro.jpg';
+
 
 import { useNavigate } from 'react-router-dom';
 
@@ -37,9 +37,7 @@ export default function Signin() {
  
     
 
-            <div className="" >
-                <img src={Pro}alt=" loading" srcset="" className=" w-  h-96  absolute  top-0 right-0  border-8 border-indigo-200"  />
-            </div>
+
 
             < h1 className=" text-xl  font-black text-start m-0 absolute top-2  ">Welcome to my page </h1>
           
