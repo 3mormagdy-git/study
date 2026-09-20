@@ -13,14 +13,14 @@ import Nothing from '../imgss/Nothing.jpeg'
                  {Array.from({ length: 9 }).map((_, index) => (
                      <div kay={index}  className=" bg-gray-600/25 border border-slate-200 rounded-xl p-5 w-72 shadow-sm hover:shadow-md transition flex flex-col items-center text-center  " >
                          <img src={Nothing} alt="nothing-phone" className=" w-48 h-48 " />
-                         <div className="text-sm space-y-1 text-cyan-700">
+                         <div className="text-sm space-y-1 text-[#DCEAF7]">
                              <h2> nothing phone 1  </h2>
                              <h3>256gb, 12ram
                                  Snapdragon 778G+ 5G  </h3>
                              <h3>12,000 EGP  </h3>
                          </div>
                      </div>
-                  ))};
+                  ))}
              </div>
             
          </section>
