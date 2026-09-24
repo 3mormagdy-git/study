@@ -4,7 +4,7 @@
 export default function Footer() {
     
     return (
-        <footer className=" bg-gradient-to-tl  text-xl   ">
+        <footer className=" bg-gradient-to-tl  text-xl   " id="Servics">
             
             <div className=" flex flex-col gap-2 gap-y-5 text-center ">
                         <a href="https://github.com/3mormagdy-git" className=" border-solid  border-b-2 border-black  hover:border-indigo-200 "> Githup</a>
