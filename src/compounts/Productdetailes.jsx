@@ -3,7 +3,17 @@ import React from "react";
 import { useState,useEffect } from "react";
 import { useParams,useNavigate } from "react-router-dom";
 import { ProductsData } from "./ProductData";
-export default function ProductDetails() {
+import { useCart } from "../Cart/CartContext";
+export default function ProductDetails({item}) {
+  const { dispatch } = useCart();
+  const handleAddToCart = () => {
+    dispatch(
+      {
+        type: "ADD_TO_CART",
+        payload: item,
+      }
+    );
+  };
   const { id } = useParams();
   const navegate = useNavigate();
   const prodcut = ProductsData.find((p) => (p.id === parseInt(id)));
@@ -45,6 +55,7 @@ export default function ProductDetails() {
           <button className="bg-black px-6 py-2 rounded-lg font-bold mt-4" onClick={handleclick}>
             Buy Now
           </button>
+          <button onClick={handleAddToCart}> Add To Cart</button>
         </div>
       </div>
 </section>
