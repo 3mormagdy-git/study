@@ -1,23 +1,17 @@
 
 import React from "react";
-import { useState,useEffect } from "react";
+import { useState,useEffect,useContext } from "react";
 import { useParams,useNavigate } from "react-router-dom";
 import { ProductsData } from "./ProductData";
-import { useCart } from "../Cart/CartContext";
-export default function ProductDetails({item}) {
-  const { dispatch } = useCart();
-  const handleAddToCart = () => {
-    dispatch(
-      {
-        type: "ADD_TO_CART",
-        payload: item,
-      }
-    );
-  };
+import { ShopContext } from "../context/Shop-context";
+export default function ProductDetails({}) {
+/// calls shpoContext and id 
   const { id } = useParams();
   const navegate = useNavigate();
+  const { addTOCart, cartItems } = useContext(ShopContext);
   const prodcut = ProductsData.find((p) => (p.id === parseInt(id)));
-  const [isUserlogin, setisUserlogin] = useState('');
+////
+  const [isUserlogin, setisUserlogin] = useState("");
   useEffect(() => {
     const signin = localStorage.getItem("islogged in");
     if (signin === 'true') {
@@ -39,6 +33,7 @@ export default function ProductDetails({item}) {
   if (!prodcut) { 
     return <h2 className = "text-center text-white mt-10  "> product not found </h2>
   }
+  const cartItemAmount =cartItems[prodcut.id]
 
   return (
     <section className=" py12 px4\ max-w-4xl mx-auto text-white ">
@@ -51,11 +46,11 @@ export default function ProductDetails({item}) {
           <p className="text-gray-500"> {prodcut.ram}</p>
           <p className="text-gray-500"> {prodcut.cpu}</p>
           <p className="text-gray-600 mt-4">{prodcut.describtion}</p>
-          
-          <button className="bg-black px-6 py-2 rounded-lg font-bold mt-4" onClick={handleclick}>
+          <div className="grid grid-rows-1 grid-cols-1 gap-x-6"></div>
+          <button className="bg-black px-6 py-2 rounded-lg font-bold mt-4  " onClick={handleclick}>
             Buy Now
           </button>
-          <button onClick={handleAddToCart}> Add To Cart</button>
+          <button className="bg-black px-6 py-2 rounded-lg font-bold mt-4 " onClick={()=>addTOCart(prodcut.id)}> Add To Cart {cartItemAmount>0&&`(${cartItemAmount})`} </button>
         </div>
       </div>
 </section>
