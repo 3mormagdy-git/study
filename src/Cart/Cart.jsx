@@ -15,7 +15,7 @@ export default function Cart() {
       
       <div className="flex flex-col">
         {ProductsData.map((product) => {
-          if (cartItems[product.id] !== 0) {
+          if (cartItems[product.id] > 0) {
             return <Cartitem key={product.id} data={product} />;
           }
           return null;
