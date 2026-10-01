@@ -1,25 +1,43 @@
 import React from 'react';
-import { Routes, Route } from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import { AuthProvider } from './context/AuthContext';
+import { ShopContextProvider } from './context/Shop-context';
+import Footer from './compounts/Footer';
+import Home from './hompadge/Home';
+import Cart from './cart/Cart';
 import Signin from './signin/Signin';
 import Signup from './signup/Signup';
-import Padge from './main-padge/Padg1';
-import Home from './hompadge/Home';
-import Productdetails from './compounts/Productdetailes';
-import Cart from './cart/Cart';
-import Cartitem from './cart/Cartitem';
-import { ShopContextProvider } from './context/Shop-context';function App() {
+import Productdetailes from './compounts/Productdetailes';
+import ProtectedRoute from './compounts/ProtectedRoute ';
+
+function App() {
   return (
-  <ShopContextProvider>
-    <Routes>
-      {<Route path="/" element={<Home/> }    />}
-      <Route path="/Signin" element={<Signin/>} /> 
-      <Route path="/signup" element={<Signup />} /> 
-      <Route path="/Padge" element={< Padge />} />
-      <Route path="/product/:id" element={<Productdetails />} />
-      <Route path="Cart" element={<Cart/>} />
-      <Route path=" Cartitem" element ={< Cartitem/>} />
-      </Routes>
-    </ShopContextProvider>
+    <AuthProvider>
+      <ShopContextProvider>
+        <Router>
+          <div className="flex flex-col min-h-screen bg-white text-[#011C40]">
+            <main className="flex-grow">
+              <Routes>
+                <Route path="/" element={<Home />} />
+                <Route path="/product/:productId" element={<Productdetailes />} />
+                <Route path="/signin" element={<Signin />} />
+                <Route path="/signup" element={<Signup />} />
+                
+                <Route
+                  path="/cart"
+                  element={
+                    <ProtectedRoute>
+                      <Cart />
+                    </ProtectedRoute>
+                  }
+                />
+              </Routes>
+            </main>
+            <Footer />
+          </div>
+        </Router>
+      </ShopContextProvider>
+    </AuthProvider>
   );
 }
 

@@ -1,134 +1,130 @@
-import { Formik } from "formik";
-import { Link, useNavigate } from "react-router-dom";
-import react, { useState } from 'react'
+import React, { useState } from 'react';
+import { useNavigate, useLocation, Link } from 'react-router-dom';
+import { useFormik } from 'formik';
+import * as Yup from 'yup';
+import { useAuth } from '../context/AuthContext';
 
+const SigninSchema = Yup.object().shape({
+  email: Yup.string()
+    .email('Invalid email address')
+    .required('Email is required'),
+  password: Yup.string()
+    .required('Password is required'),
+});
 
-   const initialValues = {
-        email: "",
-        password: ""
-    };
-    const validate = (values) => {
-        let errors = {};
-        const regex = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/i;
-        if (!values.email) {
-            errors.email = "Email is required";
+const Signin = () => {
+  const navigate = useNavigate();
+  const location = useLocation();
+  const { login } = useAuth();
+  const [authError, setAuthError] = useState('');
+
+  const from = location.state?.from?.pathname || '/';
+
+  const formik = useFormik({
+    initialValues: {
+      email: '',
+      password: '',
+    },
+    validationSchema: SigninSchema,
+    onSubmit: (values, { setSubmitting }) => {
+      setAuthError('');
+      try {
+        const existingUsers = JSON.parse(localStorage.getItem('users') || '[]');
+        
+        const foundUser = existingUsers.find(
+          (u) => u.email === values.email && u.password === values.password
+        );
+
+        if (!foundUser) {
+          setAuthError('Invalid email or password.');
+          setSubmitting(false);
+          return;
         }
-        else if (!regex.test(values.email)) {
-            errors.email = "invalid Email";
-        }
-        if (!values.password) {
-            errors.password = "password is required";
-        } else if (values.password.length < 4) {
-            errors.password = "Password too short";
-        }
-        return errors;
 
+        login(foundUser);
+        navigate(from, { replace: true });
+      } catch (error) {
+        console.error('Signin error:', error);
+        setAuthError('An unexpected error occurred during signin.');
+      } finally {
+        setSubmitting(false);
+      }
+    },
+  });
 
-    };
-    const submitForm = (values) => {
-        console.log(values);
-    };
+  return (
+    <div className="min-h-[80vh] flex items-center justify-center bg-[#A7EBF2]/10 py-12 px-4 sm:px-6 lg:px-8">
+      <div className="max-w-md w-full space-y-8 bg-white p-8 rounded-xl shadow-lg border border-[#54ACBF]/20">
+        <div>
+          <h2 className="mt-6 text-center text-3xl font-extrabold text-[#011C40]">
+            Sign in to your account
+          </h2>
+          <p className="mt-2 text-center text-sm text-[#26658C]">
+            Or{' '}
+            <Link to="/signup" className="font-medium text-[#54ACBF] hover:text-[#023859]">
+              create a new account
+            </Link>
+          </p>
+        </div>
 
+        {authError && (
+          <div className="bg-red-50 border-l-4 border-red-400 p-4 text-sm text-red-700" role="alert">
+            {authError}
+          </div>
+        )}
 
+        <form className="mt-8 space-y-6" onSubmit={formik.handleSubmit}>
+          <div className="rounded-md shadow-sm space-y-4">
+            <div>
+              <label className="block text-sm font-medium text-[#011C40] mb-1">Email Address</label>
+              <input
+                id="email"
+                name="email"
+                type="email"
+                autoComplete="email"
+                className={`appearance-none relative block w-full px-3 py-2 border ${
+                  formik.touched.email && formik.errors.email ? 'border-red-500' : 'border-[#26658C]/30'
+                } placeholder-gray-400 text-[#011C40] rounded-md focus:outline-none focus:ring-[#54ACBF] focus:border-[#54ACBF] sm:text-sm`}
+                placeholder="you@example.com"
+                {...formik.getFieldProps('email')}
+              />
+              {formik.touched.email && formik.errors.email && (
+                <p className="mt-1 text-xs text-red-500">{formik.errors.email}</p>
+              )}
+            </div>
 
+            <div>
+              <label className="block text-sm font-medium text-[#011C40] mb-1">Password</label>
+              <input
+                id="password"
+                name="password"
+                type="password"
+                autoComplete="current-password"
+                className={`appearance-none relative block w-full px-3 py-2 border ${
+                  formik.touched.password && formik.errors.password ? 'border-red-500' : 'border-[#26658C]/30'
+                } placeholder-gray-400 text-[#011C40] rounded-md focus:outline-none focus:ring-[#54ACBF] focus:border-[#54ACBF] sm:text-sm`}
+                placeholder="••••••••"
+                {...formik.getFieldProps('password')}
+              />
+              {formik.touched.password && formik.errors.password && (
+                <p className="mt-1 text-xs text-red-500">{formik.errors.password}</p>
+              )}
+            </div>
+          </div>
 
-export default function Signin() {
-    const [email, setEmail] = useState('');
-    const navegate = useNavigate();
-  
-    const auth = (e) => {
-        e.preventDefault();
-        if (email.trim() !== '') { 
-            localStorage.setItem('userToken', email);
-            localStorage.setItem('isSign in', 'true');
-            navegate('/');
-        }
-        else{ alert(' please enter your email  ')}
-}
-
-
-
-
-
-    return (
-        <Formik initialValues={initialValues}
-            validate={validate}
-            onSubmit={submitForm}
-            
-        >
-            {(formik) => {
-                const {
-                    values,
-                    handleChange,
-                    handleSubmit,
-                    errors,
-                    touched,
-                    handleBlur,
-                    isValid,
-                    dirty
-                } = formik;
-                return (
-
-                    <div onSubmit={auth} className="  bg-[#122740] w-full  h-screen bg-cover flex justify-center items-center flex-col   text-[#DCEAF7]   ">
-                        <h1 className=" font-black text-3xl text-center " > Sign un to continue </h1>
-                        <form onChange={(e) => setEmail(e.target.value)} onSubmit={handleSubmit} className=" flexbox  justify-center flex-col text-[#DCEAF7] items-center border-4 border-opacity-15 border-solid border-[#4A74A7] w-96 h-72 bg-[#ffffff51]  rounded-xl  px-7 pt-14 "  >
-                            <div className="form-row flex flex-col font-bold rounded-2xl  " >
-                                <label htmlFor="email">Email</label>
-                                <input type="email" name="email" id="email" values={values.email} value={email}
-                                    onChange={(e) => {
-                                        handleChange(e);
-                                        setEmail(e.target.value);
-                                    }} onBlur={handleBlur}
-                                    className={errors.email && touched.email ? "input-error  bg-[#9ebad5] text-[#414243]" : null}
-                                />
-                                {errors.email && touched.email &&
-                                    (
-                                        <span className="error" >
-                                            {errors.email}</span>
-                                    
-                                    )}
-                            </div>
-                            <div className="form-row  flex flex-col font-bold rounded-2xl   "  >
-                                <label htmlFor="password">Password</label>
-                                <input type="password" name="password" id="password"
-                                    value={values.password}
-                                    onChange={handleChange}
-                                    onBlur={handleBlur}
-                                    className={errors.password && touched.password ?
-                                        "input-error bg-[#9ebad5] text-[#414243]  " : null}
-                                    
-                                />
-                                {errors.password && touched.password && (
-                                    <span className="error">
-                                        {
-                                            errors.password
-                                        }
-                                    </span>
-                                )}
-                            </div>
-                            <div className=" flex text-center border-2 border-solid border-[#9ebad5] w-24 justify-center mx-auto mt-4 bg-[#1062ae] ">
-                                <button type="submit"
-                                    className={dirty && isValid ? ""
-                                        : "disabled-btn"}
-                                    disabled={!(dirty && isValid)} onClick={ auth} > Sign in
-                                </button>
-                            </div>
-                            <div>
-                                <p>If you don't have Account go to <Link to="/Signup" className=" underline decoration-[#9ebad5] text-[#8ac7ff]  " >Sign up</Link> </p>
-                            </div>
-                        </form>
-                    </div>
-
-                );
-
-            }}
-        </Formik>
-
-
-       
-    
-    );
-
-
-
+          <div>
+            <button
+              type="submit"
+              disabled={formik.isSubmitting}
+              className="group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-[#023859] hover:bg-[#011C40] focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[#54ACBF] transition-colors"
+            >
+              {formik.isSubmitting ? 'Signing in...' : 'Sign In'}
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  );
 };
+
+export default Signin;

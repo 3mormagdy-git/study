@@ -1,63 +1,121 @@
-import { ProductsData } from "../compounts/ProductData";
-import React, { createContext, useState } from 'react'
+import React, { createContext, useState, useEffect, useContext } from 'react';
+import { AuthContext } from './AuthContext';
+
 export const ShopContext = createContext(null);
-export const getDefaultCart = () => {
-    let cart = {};
-    for (let i = 1; i < ProductsData; i++) {
-        cart[i] = 0;
-    }
-    return cart;
-};
-export const ShopContextProvider =(props)=> {
+
+export const ShopContextProvider = ({ children }) => {
+  const { user } = useContext(AuthContext);
   
-  const [cartItems, setCartItems] = useState(getDefaultCart());
-  const addToCart = (itemID) => {
-    setCartItems((prev) => ({ ...prev, [itemID]: (prev[itemID] || 0) + 1 }));
+  const userId = user ? (user.id || user.email) : null;
+  const storageKey = userId ? `cart_${userId}` : null;
+
+  const [cartItems, setCartItems] = useState({});
+
+  useEffect(() => {
+    if (!userId || !storageKey) {
+      setCartItems({});
+      return;
+    }
+
+    const savedCart = localStorage.getItem(storageKey);
+    if (savedCart) {
+      try {
+        setCartItems(JSON.parse(savedCart));
+      } catch (error) {
+        console.error("Failed to parse cart from localStorage:", error);
+        setCartItems({});
+      }
+    } else {
+      setCartItems({});
+    }
+  }, [userId, storageKey]);
+
+  useEffect(() => {
+    if (userId && storageKey) {
+      localStorage.setItem(storageKey, JSON.stringify(cartItems));
+    }
+  }, [cartItems, userId, storageKey]);
+
+  const addToCart = (itemId) => {
+    if (!userId) {
+      return;
+    }
+
+    setCartItems((prev) => ({
+      ...prev,
+      [itemId]: (prev[itemId] || 0) + 1,
+    }));
   };
-  const removeFromCart = (itemID) => {
-    setCartItems((prev) => ({ ...prev, [itemID]: Math.max((prev[itemID] || 0) - 1, 0) }));
+
+  const removeFromCart = (itemId) => {
+    if (!userId) return;
+
+    setCartItems((prev) => {
+      const updated = { ...prev };
+      delete updated[itemId];
+      return updated;
+    });
   };
-  const updateCartItemCount = (newAmount, itemID) => {
-    setCartItems((prev) => ({ ...prev, [itemID]: newAmount }));
+
+  const updateCartItemCount = (newAmount, itemId) => {
+    if (!userId) return;
+
+    setCartItems((prev) => {
+      if (newAmount <= 0) {
+        const updated = { ...prev };
+        delete updated[itemId];
+        return updated;
+      }
+      return {
+        ...prev,
+        [itemId]: newAmount,
+      };
+    });
   };
-        
-  const getTotalCartAmount = () => {
+
+  const clearCart = () => {
+    setCartItems({});
+    if (storageKey) {
+      localStorage.removeItem(storageKey);
+    }
+  };
+
+  const getTotalCartAmount = (allProducts = []) => {
     let totalAmount = 0;
     for (const item in cartItems) {
       if (cartItems[item] > 0) {
-        let itemInfo = ProductsData.find((product) => product.id === Number(item));
-        if (itemInfo) {
-          totalAmount += cartItems[item] * itemInfo.price;
+        let itemInfo = allProducts.find((product) => String(product.id) === String(item));
+        // تم التعديل هنا لتقرأ item.price بدلاً من new_price
+        if (itemInfo && itemInfo.price) {
+          const rawPrice = String(itemInfo.price).replace(/[^0-9.-]+/g, "");
+          const price = parseFloat(rawPrice) || 0;
+          totalAmount += price * cartItems[item];
         }
       }
     }
     return totalAmount;
   };
-  const getTotalCartItems = () => {
-    let totalItem = 0;
-    for (const item in cartItems) {
-      if (cartItems[item] > 0) {
-        totalItem += cartItems[item];
-      }
-    }
-    return totalItem;
-  };
+
   const contextValue = {
     cartItems,
     addToCart,
     removeFromCart,
     updateCartItemCount,
     getTotalCartAmount,
-    getTotalCartItems,
+    clearCart,
   };
-            
+
   return (
     <ShopContext.Provider value={contextValue}>
-      {props.children}
+      {children}
     </ShopContext.Provider>
   );
-        
-        
-        
-            
-}
+};
+
+export const useShop = () => {
+  const context = useContext(ShopContext);
+  if (!context) {
+    throw new Error('useShop must be used within a ShopContextProvider');
+  }
+  return context;
+};
