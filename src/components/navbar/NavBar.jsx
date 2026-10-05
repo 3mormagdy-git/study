@@ -4,7 +4,7 @@ import { useTheme } from '../../context/ThemeContext';
 import { useLanguage } from '../../context/LanguageContext';
 import { useAuth } from '../../context/AuthContext'; // 👈 استيراد Auth
 
-export default function Navbar() {
+export default function NavBar() {
   const [scrolled, setScrolled] = useState(false);
   const location = useLocation();
   
@@ -19,22 +19,28 @@ export default function Navbar() {
   }, []);
 
   // قاموس الترجمة الخاص بالـ Navbar
+  // Inside NavBar.jsx, update the translation dictionary (t) and navLinks array:
+
   const t = {
     EN: {
+      home: "Home", // Added Home
       destinations: "Destinations", trips: "Trips", services: "Services", about: "About",
       inquire: "Inquire", signIn: "Sign In", signUp: "Sign Up", hello: "Hello"
     },
     AR: {
+      home: "الرئيسية", // Added Home
       destinations: "الوجهات", trips: "الرحلات", services: "الخدمات", about: "فلسفتنا",
       inquire: "استعلام", signIn: "دخول", signUp: "إنشاء حساب", hello: "أهلاً"
     }
   }[language];
 
+  // الترتيب الجديد: Home -> About -> Services -> Destinations -> Trips
   const navLinks = [
+    { name: t.home, path: '/' },
+    { name: t.about, path: '/about' },
+    { name: t.services, path: '/services' },
     { name: t.destinations, path: '/destinations' },
     { name: t.trips, path: '/trips' },
-    { name: t.services, path: '/services' },
-    { name: t.about, path: '/about' },
   ];
 
   return (
