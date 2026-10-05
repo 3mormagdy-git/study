@@ -1,3 +1,30 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@layer base {
+  body {
+    @apply bg-parchment text-obsidian dark:bg-charcoalDeep dark:text-parchment font-sans antialiased transition-colors duration-300;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+}
+
+/* تخصيص شريط التمرير (Scrollbar) ليتناسب مع الطابع المينيمال والراقي */
+::-webkit-scrollbar {
+  width: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: #f9f5f2;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #919191;
+  border-radius: 3px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #3e3e3e;
+}
