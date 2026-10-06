@@ -2,29 +2,87 @@
 @tailwind components;
 @tailwind utilities;
 
-@layer base {
-  body {
-    @apply bg-parchment text-obsidian dark:bg-charcoalDeep dark:text-parchment font-sans antialiased transition-colors duration-300;
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
+/* ========================================
+   CINEMATIC WORLD MAP ANIMATIONS
+   ======================================== */
+   @layer base {
+    /* منع التمرير الأفقي في جميع الشاشات وضبط حدود العرض */
+    html, body {
+      overflow-x: hidden;
+      max-width: 100vw;
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+  
+    /* ضمان تجاوب الصور والعناصر المرئية تلقائياً */
+    img, svg {
+      max-width: 100%;
+      height: auto;
+    }
   }
+  
+  /* تخصيص الـ Scrollbar ليكون فخماً ونحييفاً في كل الشاشات */
+  ::-webkit-scrollbar {
+    width: 6px;
+  }
+  ::-webkit-scrollbar-track {
+    background: transparent;
+  }
+  ::-webkit-scrollbar-thumb {
+    background: rgba(120, 120, 120, 0.3);
+    border-radius: 3px;
+  }
+
+@keyframes mapCinematicPan {
+  0%, 100% { transform: scale(1) translate(0px, 0px); }
+  50% { transform: scale(1.05) translate(-1.5%, 1%); }
 }
 
-/* تخصيص شريط التمرير (Scrollbar) ليتناسب مع الطابع المينيمال والراقي */
-::-webkit-scrollbar {
-  width: 6px;
+@keyframes pulseDest {
+  0%, 100% { transform: scale(1); opacity: 0.8; }
+  50% { transform: scale(2.2); opacity: 0.2; }
 }
 
-::-webkit-scrollbar-track {
-  background: #f9f5f2;
+@keyframes drawPathRoute {
+  0% { stroke-dashoffset: 1000; opacity: 0.1; }
+  50% { opacity: 0.5; }
+  100% { stroke-dashoffset: 0; opacity: 0.3; }
 }
 
-::-webkit-scrollbar-thumb {
-  background: #919191;
-  border-radius: 3px;
+@keyframes moveRouteLight {
+  0% { stroke-dasharray: 20 1000; stroke-dashoffset: 1000; opacity: 0; }
+  20% { opacity: 1; }
+  80% { opacity: 1; }
+  100% { stroke-dashoffset: 0; opacity: 0; }
 }
 
-::-webkit-scrollbar-thumb:hover {
-  background: #3e3e3e;
+@keyframes atmosphericGlow {
+  0%, 100% { transform: scale(1); opacity: 0.3; }
+  50% { transform: scale(1.15); opacity: 0.5; }
+}
+
+@layer utilities {
+  .animate-map-pan {
+    animation: mapCinematicPan 35s infinite ease-in-out;
+  }
+  .animate-dest-pulse {
+    animation: pulseDest 4s infinite ease-in-out;
+  }
+  .animate-route-draw {
+    animation: drawPathRoute 12s infinite linear;
+  }
+  .animate-route-light {
+    animation: moveRouteLight 8s infinite linear;
+  }
+  .animate-atmosphere {
+    animation: atmosphericGlow 20s infinite ease-in-out;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .animate-map-pan, .animate-dest-pulse, .animate-route-draw, .animate-route-light, .animate-atmosphere {
+      animation: none !important;
+      transform: none !important;
+    }
+  }
 }
