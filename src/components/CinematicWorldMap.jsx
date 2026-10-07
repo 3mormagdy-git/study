@@ -26,12 +26,12 @@ export default function CinematicWorldMap() {
   return (
     <div className="absolute inset-0 z-0 overflow-hidden pointer-events-none flex items-center justify-center">
       
-      {/* إضاءة خلفية تتكيف مع الشاشات */}
+      {/* إضاءة خلفية متجاوبة */}
       <div className="absolute w-[90vw] md:w-[70vw] h-[90vw] md:h-[70vw] rounded-full bg-amber-500/10 dark:bg-zinc-600/10 blur-[100px] md:blur-[140px] animate-atmosphere" />
 
-      {/* خريطة العالم متجاوبة (تصغر على الموبايل لتفادي أي خروج عن الشاشة) */}
-      <div className="w-full h-full opacity-50 md:opacity-60 dark:opacity-30 animate-map-pan flex items-center justify-center">
-        <svg viewBox="0 0 1000 500" className="w-[200%]: md:w-[130%] lg:w-[110%] h-auto max-w-none stroke-obsidian/40 dark:stroke-parchment/40 fill-none">
+      {/* خريطة العالم متجاوبة بالكامل ولا تسبب تمرير أفقي */}
+      <div className="w-full h-full opacity-40 md:opacity-60 dark:opacity-30 animate-map-pan flex items-center justify-center">
+        <svg viewBox="0 0 1000 500" className="w-[220%] sm:w-[160%] md:w-[130%] lg:w-[110%] h-auto max-w-none stroke-obsidian/40 dark:stroke-parchment/40 fill-none">
           
           <g className="stroke-obsidian/10 dark:stroke-parchment/10" strokeWidth="0.3">
             <line x1="0" y1="250" x2="1000" y2="250" strokeDasharray="4 4" />
