@@ -1,5 +1,5 @@
 import React from 'react';
-import { useParams, Link } from 'react-router-dom';
+import { useParams, Link, Navigate } from 'react-router-dom';
 import { useLanguage } from '../context/LanguageContext';
 import { tripsData, countriesData } from '../data/travelData';
 import Reveal from '../components/Reveal'; // 👈 استيراد الأنيميشن
@@ -16,18 +16,23 @@ export default function Trips() {
     ? countriesData.find(c => c.id === countryId.toLowerCase()) 
     : null;
 
+  // دولة غير موجودة في الرابط: أعد المستخدم لقائمة الوجهات بدل عرض صفحة فارغة
+  if (countryId && !currentCountry) {
+    return <Navigate to="/destinations" replace />;
+  }
+
   const t = {
     EN: {
       subtitle: "Curated Expeditions",
       title: currentCountry ? `Trips in ${currentCountry.nameEn}` : "All Trips",
       desc: "Immerse yourself in our meticulously designed travel architectures.",
-      viewDetails: "Request Itinerary"
+      viewDetails: "View Itinerary"
     },
     AR: {
       subtitle: "رحلات مختارة",
       title: currentCountry ? `الرحلات في ${currentCountry.nameAr}` : "جميع الرحلات",
       desc: "انغمس في تصاميم رحلاتنا المصممة بدقة وعناية.",
-      viewDetails: "طلب مسار الرحلة"
+      viewDetails: "عرض تفاصيل الرحلة"
     }
   }[language];
 
@@ -50,12 +55,13 @@ export default function Trips() {
 
       <div className="max-w-7xl mx-auto px-6 md:px-12 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
         {filteredTrips.map((trip, index) => (
-          <Reveal key={trip.id} delay={index * 150}>
-            <div className="group cursor-pointer flex flex-col justify-between h-full">
+          /* التأخير يتكرر لكل صف حتى لا تتأخر البطاقات الأخيرة عدة ثوانٍ */
+          <Reveal key={trip.id} delay={(index % 3) * 150}>
+            <Link to={`/trip/${trip.id}`} className="group flex flex-col justify-between h-full">
               <div>
                 <div className="aspect-[4/5] overflow-hidden bg-graphite/10 dark:bg-graphite/30 mb-5 relative">
-                  <img src={trip.image} alt={trip.titleEn} className="object-cover w-full h-full grayscale group-hover:grayscale-0 group-hover:scale-105 transition-all duration-1000" />
-                  <span className="absolute top-4 right-4 bg-parchment/90 dark:bg-charcoalDeep/90 backdrop-blur-sm text-xs font-mono px-3 py-1 uppercase tracking-editorial text-obsidian dark:text-parchment">
+                  <img src={trip.image} alt={language === 'EN' ? trip.titleEn : trip.titleAr} loading="lazy" className="object-cover w-full h-full grayscale group-hover:grayscale-0 group-hover:scale-105 transition-all duration-1000" />
+                  <span className="absolute top-4 end-4 bg-parchment/90 dark:bg-charcoalDeep/90 backdrop-blur-sm text-xs font-mono px-3 py-1 uppercase tracking-editorial text-obsidian dark:text-parchment">
                     {language === 'EN' ? trip.durationEn : trip.durationAr}
                   </span>
                 </div>
@@ -72,12 +78,12 @@ export default function Trips() {
                 </p>
               </div>
               <div className="pt-2 border-t border-graphite/10 dark:border-graphite/30 flex justify-between items-center mt-auto">
-                <Link to={`/trip/${trip.id}`} className="text-xs uppercase tracking-caps text-obsidian dark:text-parchment font-medium group-hover:text-graphite transition-colors">
-                  {t.viewDetails} &rarr;
-                </Link>
-                <span className="text-xs font-mono text-ashGray">Ref. 0{trip.id}</span>
+                <span className="text-xs uppercase tracking-caps text-obsidian dark:text-parchment font-medium group-hover:text-graphite transition-colors">
+                  {t.viewDetails} {language === 'AR' ? '←' : '→'}
+                </span>
+                <span className="text-xs font-mono text-ashGray">Ref. {String(trip.id).padStart(2, '0')}</span>
               </div>
-            </div>
+            </Link>
           </Reveal>
         ))}
       </div>

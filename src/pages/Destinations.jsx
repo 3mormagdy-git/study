@@ -41,12 +41,12 @@ export default function Destinations() {
 
       <div className="max-w-7xl mx-auto px-6 md:px-12 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
         {countriesData.map((country, index) => (
-          /* إضافة تأخير متصاعد لكل بطاقة بناءً على ترتيبها */
-          <Reveal key={country.id} delay={index * 150}>
-            <Link to={`/trips/${country.id}`} className="group cursor-pointer flex flex-col justify-between block h-full">
+          /* إضافة تأخير متصاعد لكل بطاقة داخل الصف الواحد */
+          <Reveal key={country.id} delay={(index % 3) * 150}>
+            <Link to={`/trips/${country.id}`} className="group flex flex-col justify-between h-full">
               <div>
                 <div className="aspect-[4/5] overflow-hidden bg-graphite/10 dark:bg-graphite/30 mb-5 relative">
-                  <img src={country.image} alt={country.nameEn} className="object-cover w-full h-full grayscale group-hover:grayscale-0 group-hover:scale-105 transition-all duration-1000" />
+                  <img src={country.image} alt={language === 'EN' ? country.nameEn : country.nameAr} loading="lazy" className="object-cover w-full h-full grayscale group-hover:grayscale-0 group-hover:scale-105 transition-all duration-1000" />
                 </div>
                 <h3 className="text-2xl font-normal tracking-editorial text-obsidian dark:text-gallery mb-2">
                   {language === 'EN' ? country.nameEn : country.nameAr}
@@ -56,7 +56,7 @@ export default function Destinations() {
                 <span className="text-xs uppercase tracking-caps text-obsidian dark:text-parchment font-medium group-hover:text-graphite transition-colors">
                   {t.exploreBtn}
                 </span>
-                <span className="text-xs font-mono text-ashGray">0{index + 1}</span>
+                <span className="text-xs font-mono text-ashGray">{String(index + 1).padStart(2, '0')}</span>
               </div>
             </Link>
           </Reveal>

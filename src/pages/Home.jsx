@@ -1,39 +1,57 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import { useLanguage } from '../context/LanguageContext';
 import Reveal from '../components/Reveal';
 import CinematicWorldMap from '../components/CinematicWorldMap'; // 👈 استيراد الخريطة السينمائية
 
 export default function Home() {
-  const featuredDestinations = [
-    {
-      id: 1,
-      title: 'Kyoto, Japan',
-      category: 'Sanctuary & Tradition',
-      image: 'https://images.unsplash.com/photo-1493976040374-85c8e12f0c0e?auto=format&fit=crop&w=800&q=80',
-      duration: '7 Days',
+  const { language } = useLanguage();
+
+  const content = {
+    EN: {
+      subtitle: "Curated Expeditions • Vol. 04",
+      title: "Travel designed for the curious mind and quiet soul.",
+      desc: "We curate bespoke journeys to the world’s most profound landscapes and cultural sanctuaries.",
+      exploreBtn: "Explore Destinations",
+      heroAlt: "Editorial Travel",
+      featuredSub: "Selected Itineraries",
+      featuredTitle: "Curated Horizons",
+      featured: [
+        { id: 1, title: 'Kyoto, Japan', category: 'Sanctuary & Tradition', duration: '7 Days' },
+        { id: 2, title: 'Dolomites, Italy', category: 'Alpine Solitude', duration: '6 Days' },
+        { id: 3, title: 'Oaxaca, Mexico', category: 'Culinary & Heritage', duration: '5 Days' },
+      ],
     },
-    {
-      id: 2,
-      title: 'Dolomites, Italy',
-      category: 'Alpine Solitude',
-      image: 'https://images.unsplash.com/photo-1519681393784-d120267933ba?auto=format&fit=crop&w=800&q=80',
-      duration: '6 Days',
+    AR: {
+      subtitle: "رحلات مختارة • العدد ٠٤",
+      title: "سفر مصمم للعقل الفضولي والروح الهادئة.",
+      desc: "ننظم رحلات مخصصة إلى أعمق المناظر الطبيعية والملاذات الثقافية في العالم.",
+      exploreBtn: "استكشف الوجهات",
+      heroAlt: "صورة سفر تحريرية",
+      featuredSub: "مسارات مختارة",
+      featuredTitle: "آفاق منتقاة",
+      featured: [
+        { id: 1, title: 'كيوتو، اليابان', category: 'ملاذ وتقاليد', duration: '٧ أيام' },
+        { id: 2, title: 'الدولوميت، إيطاليا', category: 'عزلة جبال الألب', duration: '٦ أيام' },
+        { id: 3, title: 'واهاكا، المكسيك', category: 'مطبخ وتراث', duration: '٥ أيام' },
+      ],
     },
-    {
-      id: 3,
-      title: 'Oaxaca, Mexico',
-      category: 'Culinary & Heritage',
-      image: 'https://images.unsplash.com/photo-1512813266014-4d8235e18285?auto=format&fit=crop&w=800&q=80',
-      duration: '5 Days',
-    },
-  ];
+  };
+
+  const t = content[language];
+
+  const images = {
+    1: 'https://images.unsplash.com/photo-1493976040374-85c8e12f0c0e?auto=format&fit=crop&w=800&q=80',
+    2: 'https://images.unsplash.com/photo-1519681393784-d120267933ba?auto=format&fit=crop&w=800&q=80',
+    3: 'https://images.unsplash.com/photo-1512813266014-4d8235e18285?auto=format&fit=crop&w=800&q=80',
+  };
 
   return (
     <div className="min-h-screen bg-parchment dark:bg-charcoalDeep text-obsidian dark:text-parchment pt-24 transition-colors duration-300 relative overflow-hidden">
-      
+
       {/* Hero Section مع دمج خريطة العالم السينمائية في الخلفية مباشرة */}
       <section className="relative max-w-7xl mx-auto px-6 md:px-12 py-16 md:py-24 grid grid-cols-1 md:grid-cols-12 gap-12 items-center">
-        
+
         {/* حقن الخريطة السينمائية هنا لتظهر بوضوح تحت محتوى الهيرو */}
         <CinematicWorldMap />
 
@@ -41,26 +59,26 @@ export default function Home() {
         <div className="md:col-span-7 space-y-8 relative z-10">
           <Reveal delay={100}>
             <span className="text-xs uppercase tracking-caps text-ashGray font-mono">
-              Curated Expeditions &bull; Vol. 04
+              {t.subtitle}
             </span>
           </Reveal>
 
           <Reveal delay={300}>
             <h1 className="text-4xl md:text-6xl font-light tracking-editorial leading-tight text-obsidian dark:text-gallery">
-              Travel designed for the curious mind and quiet soul.
+              {t.title}
             </h1>
           </Reveal>
 
           <Reveal delay={500}>
             <p className="text-graphite dark:text-ashGray text-lg max-w-xl font-light leading-relaxed">
-              We curate bespoke journeys to the world’s most profound landscapes and cultural sanctuaries.
+              {t.desc}
             </p>
           </Reveal>
 
           <Reveal delay={700}>
             <div className="flex items-center space-x-6 rtl:space-x-reverse pt-4">
               <Link to="/destinations" className="px-8 py-4 bg-obsidian text-gallery dark:bg-parchment dark:text-obsidian text-xs uppercase tracking-caps hover:bg-graphite transition-all duration-300">
-                Explore Destinations
+                {t.exploreBtn}
               </Link>
             </div>
           </Reveal>
@@ -71,7 +89,7 @@ export default function Home() {
             <div className="relative aspect-[4/5] overflow-hidden bg-graphite/10 dark:bg-graphite/30 shadow-2xl">
               <img
                 src="https://images.unsplash.com/photo-1507525428034-b723cf961d3e?q=80&w=1000&auto=format&fit=crop"
-                alt="Editorial Travel"
+                alt={t.heroAlt}
                 className="object-cover w-full h-full grayscale hover:grayscale-0 transition-all duration-1000"
               />
             </div>
@@ -84,19 +102,19 @@ export default function Home() {
         <Reveal>
           <div className="flex flex-col md:flex-row md:items-end justify-between mb-12">
             <div>
-              <span className="text-xs uppercase tracking-caps text-ashGray font-mono">Selected Itineraries</span>
-              <h2 className="text-3xl font-light tracking-editorial mt-2 text-obsidian dark:text-gallery">Curated Horizons</h2>
+              <span className="text-xs uppercase tracking-caps text-ashGray font-mono">{t.featuredSub}</span>
+              <h2 className="text-3xl font-light tracking-editorial mt-2 text-obsidian dark:text-gallery">{t.featuredTitle}</h2>
             </div>
           </div>
         </Reveal>
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-          {featuredDestinations.map((dest, index) => (
+          {t.featured.map((dest, index) => (
             <Reveal key={dest.id} delay={index * 200}>
-              <div className="group cursor-pointer">
+              <div className="group">
                 <div className="aspect-[3/4] overflow-hidden bg-graphite/10 dark:bg-graphite/30 mb-4">
                   <img
-                    src={dest.image}
+                    src={images[dest.id]}
                     alt={dest.title}
                     className="object-cover w-full h-full group-hover:scale-105 transition-transform duration-700"
                   />

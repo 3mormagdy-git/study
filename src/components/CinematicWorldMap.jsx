@@ -24,7 +24,7 @@ export default function CinematicWorldMap() {
   ];
 
   return (
-    <div className="absolute inset-0 z-0 overflow-hidden pointer-events-none flex items-center justify-center">
+    <div aria-hidden="true" className="absolute inset-0 z-0 overflow-hidden pointer-events-none flex items-center justify-center">
       
       {/* إضاءة خلفية متجاوبة */}
       <div className="absolute w-[90vw] md:w-[70vw] h-[90vw] md:h-[70vw] rounded-full bg-amber-500/10 dark:bg-zinc-600/10 blur-[100px] md:blur-[140px] animate-atmosphere" />

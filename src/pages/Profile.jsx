@@ -1,5 +1,5 @@
 import React from 'react';
-import { useNavigate } from 'react-router-dom';
+import { Navigate, useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 import { useLanguage } from '../context/LanguageContext';
 
@@ -10,8 +10,7 @@ export default function Profile() {
 
   // إذا لم يكن مسجلاً، أعده للصفحة الرئيسية
   if (!user) {
-    navigate('/');
-    return null;
+    return <Navigate to="/signin" replace />;
   }
 
   const handleLogout = () => {
@@ -44,7 +43,7 @@ export default function Profile() {
         
         <div className="flex items-center space-x-6 rtl:space-x-reverse mb-10 border-b border-graphite/10 dark:border-graphite/30 pb-8">
           <div className="w-20 h-20 bg-obsidian dark:bg-gallery text-gallery dark:text-obsidian rounded-full flex items-center justify-center text-3xl font-light tracking-editorial">
-            {user.name.charAt(0).toUpperCase()}
+            {(user.name || user.email || '?').charAt(0).toUpperCase()}
           </div>
           <div>
             <h1 className="text-3xl font-light tracking-editorial">{t.title}</h1>

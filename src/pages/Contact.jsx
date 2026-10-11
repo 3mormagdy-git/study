@@ -1,20 +1,29 @@
 import React, { useState } from 'react';
 import { useLanguage } from '../context/LanguageContext';
 import Reveal from '../components/Reveal'; // 👈 استيراد الأنيميشن
+import { countriesData } from '../data/travelData';
+
+const initialFormData = {
+  name: '', email: '', destination: countriesData[0].id, duration: '5-7', notes: '',
+};
+
+const durations = [
+  { value: '3-5', en: '3-5 Days', ar: '٣-٥ أيام' },
+  { value: '5-7', en: '5-7 Days', ar: '٥-٧ أيام' },
+  { value: '7-14', en: '7-14 Days', ar: '٧-١٤ يوماً' },
+];
 
 export default function Contact() {
   const { language } = useLanguage();
   const [submitted, setSubmitted] = useState(false);
-  const [formData, setFormData] = useState({
-    name: '', email: '', destination: 'Kyoto, Japan', duration: '5-7 Days', notes: '',
-  });
+  const [formData, setFormData] = useState(initialFormData);
 
   const content = {
     EN: {
-      subtitle: "Private Inquiry • Consultation", title: "Begin Your Dialogue", desc: "Every journey begins with a private conversation. Share your vision, rhythms, and preferences with our curatorial team.", directBureau: "Direct Bureau", cairoDesk: "Cairo & Global Desk", appointments: "Available for private appointments and bespoke itinerary reviews.", emailLabel: "Electronic Mail", phoneLabel: "Private Line", responseLabel: "Response Window", responseValue: "Within 24 architectural hours", nameLabel: "Full Name", namePlaceholder: "e.g. Omar", emailAddrLabel: "Email Address", destLabel: "Target Destination", durLabel: "Estimated Duration", notesLabel: "Specific Vision or Notes", notesPlaceholder: "Share any particular architectural interests, pacing preferences...", submitBtn: "Transmit Private Inquiry", successSub: "Inquiry Received", successTitle: "Thank you", successDesc: "Our curatorial director will review your preferences and initiate private contact shortly.", submitAnother: "Submit Another Inquiry"
+      subtitle: "Private Inquiry • Consultation", title: "Begin Your Dialogue", desc: "Every journey begins with a private conversation. Share your vision, rhythms, and preferences with our curatorial team.", directBureau: "Direct Bureau", cairoDesk: "Cairo & Global Desk", appointments: "Available for private appointments and bespoke itinerary reviews.", emailLabel: "Electronic Mail", phoneLabel: "Private Line", responseLabel: "Response Window", responseValue: "Within 24 architectural hours", nameLabel: "Full Name", namePlaceholder: "e.g. Omar", emailAddrLabel: "Email Address", destLabel: "Target Destination", durLabel: "Estimated Duration", notesLabel: "Specific Vision or Notes", notesPlaceholder: "Share any particular architectural interests, pacing preferences...", submitBtn: "Transmit Private Inquiry", successSub: "Inquiry Received", successTitle: "Thank you", successDesc: "Our curatorial director will review your preferences and initiate private contact shortly.", submitAnother: "Submit Another Inquiry", bespokeOption: "Bespoke / Custom Route"
     },
     AR: {
-      subtitle: "استعلام خاص • استشارة", title: "ابدأ حوارك", desc: "كل رحلة تبدأ بمحادثة خاصة. شارك رؤيتك وإيقاعك وتفضيلاتك مع فريق التنظيم والترتيب لدينا.", directBureau: "المكتب المباشر", cairoDesk: "مكتب القاهرة والعالم", appointments: "متاح للمواعيد الخاصة ومراجعة مسارات الرحلات المصممة خصيصاً.", emailLabel: "البريد الإلكتروني", phoneLabel: "الخط الخاص", responseLabel: "نافذة الاستجابة", responseValue: "خلال ٢٤ ساعة", nameLabel: "الاسم الكامل", namePlaceholder: "مثال: عمر", emailAddrLabel: "البريد الإلكتروني", destLabel: "الوجهة المستهدفة", durLabel: "المدة المقدرة", notesLabel: "رؤية خاصة أو ملاحظات", notesPlaceholder: "شارك أي اهتمامات معمارية خاصة، أو تفضيلات وتفاصيل...", submitBtn: "إرسال الاستعلام الخاص", successSub: "تم استلام الاستعلام", successTitle: "شكراً لك", successDesc: "سيقوم مدير التنظيم بمراجعة تفضيلاتك والتواصل معك في أقرب وقت.", submitAnother: "إرسال استعلام آخر"
+      subtitle: "استعلام خاص • استشارة", title: "ابدأ حوارك", desc: "كل رحلة تبدأ بمحادثة خاصة. شارك رؤيتك وإيقاعك وتفضيلاتك مع فريق التنظيم والترتيب لدينا.", directBureau: "المكتب المباشر", cairoDesk: "مكتب القاهرة والعالم", appointments: "متاح للمواعيد الخاصة ومراجعة مسارات الرحلات المصممة خصيصاً.", emailLabel: "البريد الإلكتروني", phoneLabel: "الخط الخاص", responseLabel: "نافذة الاستجابة", responseValue: "خلال ٢٤ ساعة", nameLabel: "الاسم الكامل", namePlaceholder: "مثال: عمر", emailAddrLabel: "البريد الإلكتروني", destLabel: "الوجهة المستهدفة", durLabel: "المدة المقدرة", notesLabel: "رؤية خاصة أو ملاحظات", notesPlaceholder: "شارك أي اهتمامات معمارية خاصة، أو تفضيلات وتفاصيل...", submitBtn: "إرسال الاستعلام الخاص", successSub: "تم استلام الاستعلام", successTitle: "شكراً لك", successDesc: "سيقوم مدير التنظيم بمراجعة تفضيلاتك والتواصل معك في أقرب وقت.", submitAnother: "إرسال استعلام آخر", bespokeOption: "مسار مخصص حسب الطلب"
     }
   };
 
@@ -41,8 +50,8 @@ export default function Contact() {
                 <p className="text-graphite dark:text-ashGray text-sm font-light mt-2">{t.appointments}</p>
               </div>
               <div className="space-y-4 border-t border-graphite/10 dark:border-graphite/30 pt-6">
-                <div><span className="text-xs uppercase tracking-editorial text-ashGray block">{t.emailLabel}</span><span className="text-sm font-mono text-obsidian dark:text-parchment">inquiries@aurajourneys.com</span></div>
-                <div><span className="text-xs uppercase tracking-editorial text-ashGray block">{t.phoneLabel}</span><span className="text-sm font-mono text-obsidian dark:text-parchment">+20 (0) 2 555 0192</span></div>
+                <div><span className="text-xs uppercase tracking-editorial text-ashGray block">{t.emailLabel}</span><a href="mailto:inquiries@aurajourneys.com" className="text-sm font-mono text-obsidian dark:text-parchment hover:underline">inquiries@aurajourneys.com</a></div>
+                <div><span className="text-xs uppercase tracking-editorial text-ashGray block">{t.phoneLabel}</span><a href="tel:+2025550192" dir="ltr" className="text-sm font-mono text-obsidian dark:text-parchment hover:underline">+20 (0) 2 555 0192</a></div>
                 <div><span className="text-xs uppercase tracking-editorial text-ashGray block">{t.responseLabel}</span><span className="text-sm font-light text-graphite dark:text-ashGray">{t.responseValue}</span></div>
               </div>
             </div>
@@ -57,32 +66,37 @@ export default function Contact() {
                   <span className="text-xs font-mono uppercase tracking-caps text-ashGray">{t.successSub}</span>
                   <h3 className="text-2xl font-light tracking-editorial text-obsidian dark:text-gallery">{t.successTitle}, {formData.name}.</h3>
                   <p className="text-graphite dark:text-ashGray text-sm font-light max-w-md mx-auto">{t.successDesc}</p>
-                  <button onClick={() => setSubmitted(false)} className="mt-6 text-xs uppercase tracking-caps px-6 py-3 border border-obsidian dark:border-parchment text-obsidian dark:text-parchment hover:bg-obsidian hover:text-gallery dark:hover:bg-parchment dark:hover:text-obsidian transition-all">{t.submitAnother}</button>
+                  <button onClick={() => { setFormData(initialFormData); setSubmitted(false); }}className="mt-6 text-xs uppercase tracking-caps px-6 py-3 border border-obsidian dark:border-parchment text-obsidian dark:text-parchment hover:bg-obsidian hover:text-gallery dark:hover:bg-parchment dark:hover:text-obsidian transition-all">{t.submitAnother}</button>
                 </div>
               ) : (
                 <form onSubmit={handleSubmit} className="space-y-6">
                   {/* ... (باقي الفورم كما هو تماماً، لم يتغير فيه شيء) */}
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                    <div className="space-y-2"><label className="text-xs uppercase tracking-caps text-ashGray font-mono block">{t.nameLabel}</label><input type="text" name="name" required value={formData.name} onChange={handleChange} placeholder={t.namePlaceholder} className="w-full bg-parchment dark:bg-charcoalDeep border border-graphite/20 dark:border-graphite/40 px-4 py-3 text-sm text-obsidian dark:text-gallery focus:outline-none focus:border-obsidian dark:focus:border-gallery font-light transition-colors" /></div>
-                    <div className="space-y-2"><label className="text-xs uppercase tracking-caps text-ashGray font-mono block">{t.emailAddrLabel}</label><input type="email" name="email" required value={formData.email} onChange={handleChange} placeholder="omar@domain.com" className="w-full bg-parchment dark:bg-charcoalDeep border border-graphite/20 dark:border-graphite/40 px-4 py-3 text-sm text-obsidian dark:text-gallery focus:outline-none focus:border-obsidian dark:focus:border-gallery font-light transition-colors" /></div>
+                    <div className="space-y-2"><label htmlFor="contact-name" className="text-xs uppercase tracking-caps text-ashGray font-mono block">{t.nameLabel}</label><input id="contact-name" type="text" name="name" autoComplete="name"required value={formData.name} onChange={handleChange} placeholder={t.namePlaceholder} className="w-full bg-parchment dark:bg-charcoalDeep border border-graphite/20 dark:border-graphite/40 px-4 py-3 text-sm text-obsidian dark:text-gallery focus:outline-none focus:border-obsidian dark:focus:border-gallery font-light transition-colors" /></div>
+                    <div className="space-y-2"><label htmlFor="contact-email" className="text-xs uppercase tracking-caps text-ashGray font-mono block">{t.emailAddrLabel}</label><input id="contact-email" type="email" name="email" autoComplete="email"required value={formData.email} onChange={handleChange} placeholder="omar@domain.com" className="w-full bg-parchment dark:bg-charcoalDeep border border-graphite/20 dark:border-graphite/40 px-4 py-3 text-sm text-obsidian dark:text-gallery focus:outline-none focus:border-obsidian dark:focus:border-gallery font-light transition-colors" /></div>
                   </div>
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                     <div className="space-y-2">
-                      <label className="text-xs uppercase tracking-caps text-ashGray font-mono block">{t.destLabel}</label>
-                      <select name="destination" value={formData.destination} onChange={handleChange} className="w-full bg-parchment dark:bg-charcoalDeep border border-graphite/20 dark:border-graphite/40 px-4 py-3 text-sm text-obsidian dark:text-gallery focus:outline-none focus:border-obsidian dark:focus:border-gallery font-light transition-colors">
-                        <option value="Kyoto, Japan">Kyoto, Japan</option><option value="Dolomites, Italy">Dolomites, Italy</option><option value="Oaxaca, Mexico">Oaxaca, Mexico</option><option value="Bespoke">Bespoke / Custom Route</option>
+                      <label htmlFor="contact-destination" className="text-xs uppercase tracking-caps text-ashGray font-mono block">{t.destLabel}</label>
+                      <select id="contact-destination" name="destination"value={formData.destination} onChange={handleChange} className="w-full bg-parchment dark:bg-charcoalDeep border border-graphite/20 dark:border-graphite/40 px-4 py-3 text-sm text-obsidian dark:text-gallery focus:outline-none focus:border-obsidian dark:focus:border-gallery font-light transition-colors">
+                        {countriesData.map((country) => (
+                          <option key={country.id} value={country.id}>{language === 'EN' ? country.nameEn : country.nameAr}</option>
+                        ))}
+                        <option value="bespoke">{t.bespokeOption}</option>
                       </select>
                     </div>
                     <div className="space-y-2">
-                      <label className="text-xs uppercase tracking-caps text-ashGray font-mono block">{t.durLabel}</label>
-                      <select name="duration" value={formData.duration} onChange={handleChange} className="w-full bg-parchment dark:bg-charcoalDeep border border-graphite/20 dark:border-graphite/40 px-4 py-3 text-sm text-obsidian dark:text-gallery focus:outline-none focus:border-obsidian dark:focus:border-gallery font-light transition-colors">
-                        <option value="3-5 Days">3-5 Days</option><option value="5-7 Days">5-7 Days</option><option value="7-14 Days">7-14 Days</option>
+                      <label htmlFor="contact-duration" className="text-xs uppercase tracking-caps text-ashGray font-mono block">{t.durLabel}</label>
+                      <select id="contact-duration" name="duration"value={formData.duration} onChange={handleChange} className="w-full bg-parchment dark:bg-charcoalDeep border border-graphite/20 dark:border-graphite/40 px-4 py-3 text-sm text-obsidian dark:text-gallery focus:outline-none focus:border-obsidian dark:focus:border-gallery font-light transition-colors">
+                        {durations.map((d) => (
+                          <option key={d.value} value={d.value}>{language === 'EN' ? d.en : d.ar}</option>
+                        ))}
                       </select>
                     </div>
                   </div>
                   <div className="space-y-2">
-                    <label className="text-xs uppercase tracking-caps text-ashGray font-mono block">{t.notesLabel}</label>
-                    <textarea name="notes" rows="4" value={formData.notes} onChange={handleChange} placeholder={t.notesPlaceholder} className="w-full bg-parchment dark:bg-charcoalDeep border border-graphite/20 dark:border-graphite/40 px-4 py-3 text-sm text-obsidian dark:text-gallery focus:outline-none focus:border-obsidian dark:focus:border-gallery font-light transition-colors"></textarea>
+                    <label htmlFor="contact-notes" className="text-xs uppercase tracking-caps text-ashGray font-mono block">{t.notesLabel}</label>
+                    <textarea id="contact-notes" name="notes" rows="4" value={formData.notes} onChange={handleChange} placeholder={t.notesPlaceholder} className="w-full bg-parchment dark:bg-charcoalDeep border border-graphite/20 dark:border-graphite/40 px-4 py-3 text-sm text-obsidian dark:text-gallery focus:outline-none focus:border-obsidian dark:focus:border-gallery font-light transition-colors"></textarea>
                   </div>
                   <button type="submit" className="w-full py-4 bg-obsidian dark:bg-gallery text-gallery dark:text-obsidian text-xs uppercase tracking-caps hover:bg-graphite dark:hover:bg-parchment transition-all duration-300">{t.submitBtn}</button>
                 </form>

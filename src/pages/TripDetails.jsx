@@ -19,7 +19,7 @@ export default function TripDetails() {
 
   const t = {
     EN: { back: "← Back to Trips", duration: "Duration", location: "Location", reference: "Reference Code", overview: "Expedition Overview", highlights: "Curated Highlights", highlightsList: [ "Private architectural tours with local historians.", "Exclusive access to secluded cultural sanctuaries.", "Bespoke dining experiences featuring regional gastronomy.", "Seamless private transit and dedicated concierge." ], ctaSub: "Begin Your Journey", ctaTitle: "Request This Itinerary", ctaBtn: "Start an Inquiry" },
-    AR: { back: "← العودة إلى الرحلات", duration: "المدة", location: "الموقع", reference: "رمز الرحلة", overview: "نظرة عامة على الرحلة", highlights: "أبرز المعالم المختارة", highlightsList: [ "جولات معمارية خاصة مع مؤرخين محليين.", "وصول حصري إلى الملاذات الثقافية المنعزلة.", "تجارب طعام مخصصة تتميز بفن الطهو الإقليمي.", "تنقلات خاصة سلسة وخدمة كونسيرج مخصصة." ], ctaSub: "ابدأ رحلتك", ctaTitle: "طلب مسار هذه الرحلة", ctaBtn: "ابدأ استعلاماً" }
+    AR: { back: "→ العودة إلى الرحلات", duration: "المدة", location: "الموقع", reference: "رمز الرحلة", overview: "نظرة عامة على الرحلة", highlights: "أبرز المعالم المختارة", highlightsList: [ "جولات معمارية خاصة مع مؤرخين محليين.", "وصول حصري إلى الملاذات الثقافية المنعزلة.", "تجارب طعام مخصصة تتميز بفن الطهو الإقليمي.", "تنقلات خاصة سلسة وخدمة كونسيرج مخصصة." ], ctaSub: "ابدأ رحلتك", ctaTitle: "طلب مسار هذه الرحلة", ctaBtn: "ابدأ استعلاماً" }
   }[language];
 
   return (

@@ -2,9 +2,11 @@ import React, { useState, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { useLanguage } from '../../context/LanguageContext';
 import { useAuth } from '../../context/AuthContext';
+import { useTheme } from '../../context/ThemeContext';
 
 export default function Navbar() {
   const { language, toggleLanguage } = useLanguage();
+  const { theme, toggleTheme } = useTheme();
   const { user, logout } = useAuth();
   const [isOpen, setIsOpen] = useState(false);
   const location = useLocation();
@@ -53,12 +55,21 @@ export default function Navbar() {
             {language === 'EN' ? 'العربية' : 'EN'}
           </button>
 
+          <button
+            onClick={toggleTheme}
+            className="text-xs font-mono uppercase tracking-caps text-graphite dark:text-ashGray hover:text-obsidian dark:hover:text-gallery transition-colors"
+          >
+            {theme === 'dark'
+              ? (language === 'AR' ? 'فاتح' : 'Light')
+              : (language === 'AR' ? 'داكن' : 'Dark')}
+          </button>
+
           {user ? (
             <div className="flex items-center space-x-4 rtl:space-x-reverse">
               <Link to="/profile" className="text-xs uppercase tracking-caps text-obsidian dark:text-parchment">
-                {user.name || 'Profile'}
+                {user.name || (language === 'AR' ? 'الملف الشخصي' : 'Profile')}
               </Link>
-              <button onClick={logout} className="text-xs uppercase tracking-caps text-ashGray hover:text-obsidian">
+              <button onClick={logout} className="text-xs uppercase tracking-caps text-ashGray hover:text-obsidian dark:hover:text-gallery">
                 {language === 'AR' ? 'خروج' : 'Logout'}
               </button>
             </div>
@@ -78,7 +89,8 @@ export default function Navbar() {
         <button
           onClick={() => setIsOpen(!isOpen)}
           className="md:hidden text-obsidian dark:text-parchment focus:outline-none p-2"
-          aria-label="Toggle Menu"
+          aria-label={language === 'AR' ? 'فتح القائمة' : 'Toggle Menu'}
+          aria-expanded={isOpen}
         >
           <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             {isOpen ? (
@@ -113,10 +125,19 @@ export default function Navbar() {
               {language === 'EN' ? 'Switch to العربية' : 'Switch to EN'}
             </button>
 
+            <button
+              onClick={toggleTheme}
+              className="text-xs font-mono uppercase tracking-caps text-left rtl:text-right text-graphite dark:text-ashGray"
+            >
+              {theme === 'dark'
+                ? (language === 'AR' ? 'الوضع الفاتح' : 'Light Mode')
+                : (language === 'AR' ? 'الوضع الداكن' : 'Dark Mode')}
+            </button>
+
             {user ? (
               <div className="flex flex-col space-y-3">
                 <Link to="/profile" className="text-xs uppercase tracking-caps text-obsidian dark:text-parchment">
-                  {user.name || 'Profile'}
+                  {user.name || (language === 'AR' ? 'الملف الشخصي' : 'Profile')}
                 </Link>
                 <button onClick={logout} className="text-xs uppercase tracking-caps text-left rtl:text-right text-ashGray">
                   {language === 'AR' ? 'تسجيل الخروج' : 'Logout'}
