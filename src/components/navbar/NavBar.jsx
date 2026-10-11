@@ -1,15 +1,19 @@
 import React, { useState, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import { useLanguage } from '../../context/LanguageContext';
+import { useTranslation } from 'react-i18next';
 import { useAuth } from '../../context/AuthContext';
 import { useTheme } from '../../context/ThemeContext';
 
 export default function Navbar() {
-  const { language, toggleLanguage } = useLanguage();
+  const { t, i18n } = useTranslation();
   const { theme, toggleTheme } = useTheme();
   const { user, logout } = useAuth();
   const [isOpen, setIsOpen] = useState(false);
   const location = useLocation();
+
+  const toggleLanguage = () => {
+    i18n.changeLanguage(i18n.language === 'ar' ? 'en' : 'ar');
+  };
 
   // إغلاق القائمة تلقائياً عند الانتقال لأي صفحة جديدة على الموبايل
   useEffect(() => {
@@ -17,17 +21,17 @@ export default function Navbar() {
   }, [location.pathname]);
 
   const navLinks = [
-    { name: language === 'AR' ? 'الرئيسية' : 'Home', path: '/' },
-    { name: language === 'AR' ? 'من نحن' : 'About', path: '/about' },
-    { name: language === 'AR' ? 'الخدمات' : 'Services', path: '/services' },
-    { name: language === 'AR' ? 'الوجهات' : 'Destinations', path: '/destinations' },
-    { name: language === 'AR' ? 'الرحلات' : 'Trips', path: '/trips' },
+    { name: t('nav.home'), path: '/' },
+    { name: t('nav.about'), path: '/about' },
+    { name: t('nav.services'), path: '/services' },
+    { name: t('nav.destinations'), path: '/destinations' },
+    { name: t('nav.trips'), path: '/trips' },
   ];
 
   return (
     <header className="fixed top-0 left-0 right-0 z-50 bg-parchment/90 dark:bg-charcoalDeep/90 backdrop-blur-md border-b border-graphite/10 dark:border-graphite/30 transition-colors duration-300">
       <div className="max-w-7xl mx-auto px-6 md:px-12 h-20 flex items-center justify-between">
-        
+
         {/* الشعار */}
         <Link to="/" className="text-xl tracking-editorial font-light text-obsidian dark:text-gallery">
           AURA <span className="text-xs uppercase tracking-caps font-mono text-ashGray">Journeys</span>
@@ -52,34 +56,32 @@ export default function Navbar() {
             onClick={toggleLanguage}
             className="text-xs font-mono uppercase tracking-caps text-graphite dark:text-ashGray hover:text-obsidian dark:hover:text-gallery transition-colors"
           >
-            {language === 'EN' ? 'العربية' : 'EN'}
+            {t('nav.languageToggle')}
           </button>
 
           <button
             onClick={toggleTheme}
             className="text-xs font-mono uppercase tracking-caps text-graphite dark:text-ashGray hover:text-obsidian dark:hover:text-gallery transition-colors"
           >
-            {theme === 'dark'
-              ? (language === 'AR' ? 'فاتح' : 'Light')
-              : (language === 'AR' ? 'داكن' : 'Dark')}
+            {theme === 'dark' ? t('nav.light') : t('nav.dark')}
           </button>
 
           {user ? (
             <div className="flex items-center space-x-4 rtl:space-x-reverse">
               <Link to="/profile" className="text-xs uppercase tracking-caps text-obsidian dark:text-parchment">
-                {user.name || (language === 'AR' ? 'الملف الشخصي' : 'Profile')}
+                {user.name || t('nav.profile')}
               </Link>
               <button onClick={logout} className="text-xs uppercase tracking-caps text-ashGray hover:text-obsidian dark:hover:text-gallery">
-                {language === 'AR' ? 'خروج' : 'Logout'}
+                {t('nav.logout')}
               </button>
             </div>
           ) : (
             <div className="flex items-center space-x-4 rtl:space-x-reverse">
               <Link to="/signin" className="text-xs uppercase tracking-caps text-graphite dark:text-ashGray hover:text-obsidian dark:hover:text-gallery">
-                {language === 'AR' ? 'دخول' : 'Sign In'}
+                {t('nav.signIn')}
               </Link>
               <Link to="/signup" className="px-5 py-2.5 bg-obsidian text-gallery dark:bg-parchment dark:text-obsidian text-xs uppercase tracking-caps hover:bg-graphite transition-all">
-                {language === 'AR' ? 'حساب جديد' : 'Sign Up'}
+                {t('nav.signUp')}
               </Link>
             </div>
           )}
@@ -89,7 +91,7 @@ export default function Navbar() {
         <button
           onClick={() => setIsOpen(!isOpen)}
           className="md:hidden text-obsidian dark:text-parchment focus:outline-none p-2"
-          aria-label={language === 'AR' ? 'فتح القائمة' : 'Toggle Menu'}
+          aria-label={t('nav.toggleMenu')}
           aria-expanded={isOpen}
         >
           <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -120,36 +122,34 @@ export default function Navbar() {
           <div className="pt-6 border-t border-graphite/10 dark:border-graphite/30 flex flex-col space-y-4">
             <button
               onClick={toggleLanguage}
-              className="text-xs font-mono uppercase tracking-caps text-left rtl:text-right text-graphite dark:text-ashGray"
+              className="text-xs font-mono uppercase tracking-caps text-start text-graphite dark:text-ashGray"
             >
-              {language === 'EN' ? 'Switch to العربية' : 'Switch to EN'}
+              {t('nav.languageToggleLong')}
             </button>
 
             <button
               onClick={toggleTheme}
-              className="text-xs font-mono uppercase tracking-caps text-left rtl:text-right text-graphite dark:text-ashGray"
+              className="text-xs font-mono uppercase tracking-caps text-start text-graphite dark:text-ashGray"
             >
-              {theme === 'dark'
-                ? (language === 'AR' ? 'الوضع الفاتح' : 'Light Mode')
-                : (language === 'AR' ? 'الوضع الداكن' : 'Dark Mode')}
+              {theme === 'dark' ? t('nav.lightMode') : t('nav.darkMode')}
             </button>
 
             {user ? (
               <div className="flex flex-col space-y-3">
                 <Link to="/profile" className="text-xs uppercase tracking-caps text-obsidian dark:text-parchment">
-                  {user.name || (language === 'AR' ? 'الملف الشخصي' : 'Profile')}
+                  {user.name || t('nav.profile')}
                 </Link>
-                <button onClick={logout} className="text-xs uppercase tracking-caps text-left rtl:text-right text-ashGray">
-                  {language === 'AR' ? 'تسجيل الخروج' : 'Logout'}
+                <button onClick={logout} className="text-xs uppercase tracking-caps text-start text-ashGray">
+                  {t('nav.logoutLong')}
                 </button>
               </div>
             ) : (
               <div className="flex flex-col space-y-3">
                 <Link to="/signin" className="text-xs uppercase tracking-caps text-graphite dark:text-ashGray">
-                  {language === 'AR' ? 'تسجيل الدخول' : 'Sign In'}
+                  {t('nav.signInLong')}
                 </Link>
                 <Link to="/signup" className="w-full py-3 text-center bg-obsidian text-gallery dark:bg-parchment dark:text-obsidian text-xs uppercase tracking-caps">
-                  {language === 'AR' ? 'إنشاء حساب' : 'Sign Up'}
+                  {t('nav.signUpLong')}
                 </Link>
               </div>
             )}

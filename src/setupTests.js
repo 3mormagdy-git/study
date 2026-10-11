@@ -7,3 +7,6 @@ import { TextEncoder, TextDecoder } from 'util';
 
 // react-router v7 expects these globals, which CRA's jsdom environment lacks.
 Object.assign(global, { TextEncoder, TextDecoder });
+
+// Load translations, as src/index.jsx does in the real app.
+require('./i18n');
