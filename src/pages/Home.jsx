@@ -1,8 +1,8 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
-import Reveal from '../components/Reveal';
-import CinematicWorldMap from '../components/CinematicWorldMap'; // 👈 استيراد الخريطة السينمائية
+import Reveal from 'components/Reveal';
+import CinematicWorldMap from 'components/CinematicWorldMap'; // 👈 استيراد الخريطة السينمائية
 
 const featuredImages = [
   'https://images.unsplash.com/photo-1493976040374-85c8e12f0c0e?auto=format&fit=crop&w=800&q=80',

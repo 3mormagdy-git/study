@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import Reveal from '../components/Reveal'; // 👈 استيراد الأنيميشن
-import { countriesData } from '../data/travelData';
+import Reveal from 'components/Reveal'; // 👈 استيراد الأنيميشن
+import { countriesData } from 'data/travelData';
 
 const initialFormData = {
   name: '', email: '', destination: countriesData[0].id, duration: '5-7', notes: '',

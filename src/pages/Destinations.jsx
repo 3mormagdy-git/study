@@ -1,8 +1,8 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
-import { countriesData } from '../data/travelData';
-import Reveal from '../components/Reveal'; // 👈 استيراد الأنيميشن
+import { countriesData } from 'data/travelData';
+import Reveal from 'components/Reveal'; // 👈 استيراد الأنيميشن
 
 export default function Destinations() {
   const { t } = useTranslation();

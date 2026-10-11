@@ -1,8 +1,8 @@
 import React, { useEffect } from 'react';
 import { useParams, Link, useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
-import { tripsData } from '../data/travelData';
-import Reveal from '../components/Reveal'; // 👈 استيراد الأنيميشن
+import { tripsData } from 'data/travelData';
+import Reveal from 'components/Reveal'; // 👈 استيراد الأنيميشن
 
 export default function TripDetails() {
   const { t } = useTranslation();

@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
-import { useAuth } from '../../context/AuthContext';
+import { useAuth } from 'context/AuthContext';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
 

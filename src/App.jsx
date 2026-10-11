@@ -1,21 +1,21 @@
 import React from 'react';
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
-import { ThemeProvider } from './context/ThemeContext';
-import { AuthProvider } from './context/AuthContext';
+import { ThemeProvider } from 'context/ThemeContext';
+import { AuthProvider } from 'context/AuthContext';
 
-import ScrollToTop from './components/scrollToTop/ScrollToTop';
-import Navbar from './components/navbar/NavBar';
-import Footer from './components/footer/Footer';
-import Home from './pages/Home';
-import Destinations from './pages/Destinations';
-import Trips from './pages/Trips';
-import TripDetails from './pages/TripDetails';
-import Services from './pages/Services';
-import About from './pages/About';
-import Contact from './pages/Contact';
-import SignIn from './pages/signin/Signin';
-import SignUp from './pages/signup/Signup';
-import Profile from './pages/Profile';
+import ScrollToTop from 'components/scrollToTop/ScrollToTop';
+import Navbar from 'components/navbar/NavBar';
+import Footer from 'components/footer/Footer';
+import Home from 'pages/Home';
+import Destinations from 'pages/Destinations';
+import Trips from 'pages/Trips';
+import TripDetails from 'pages/TripDetails';
+import Services from 'pages/Services';
+import About from 'pages/About';
+import Contact from 'pages/Contact';
+import SignIn from 'pages/signin/Signin';
+import SignUp from 'pages/signup/Signup';
+import Profile from 'pages/Profile';
 
 export default function App() {
   return (

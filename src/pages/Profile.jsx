@@ -1,7 +1,7 @@
 import React from 'react';
 import { Navigate, useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
-import { useAuth } from '../context/AuthContext';
+import { useAuth } from 'context/AuthContext';
 
 export default function Profile() {
   const { user, logout } = useAuth();

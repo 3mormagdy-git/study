@@ -9,4 +9,4 @@ import { TextEncoder, TextDecoder } from 'util';
 Object.assign(global, { TextEncoder, TextDecoder });
 
 // Load translations, as src/index.jsx does in the real app.
-require('./i18n');
+require('i18n');

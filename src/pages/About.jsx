@@ -1,6 +1,6 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
-import Reveal from '../components/Reveal'; // 👈 استيراد الأنيميشن
+import Reveal from 'components/Reveal'; // 👈 استيراد الأنيميشن
 
 export default function About() {
   const { t } = useTranslation();
