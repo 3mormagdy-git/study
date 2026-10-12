@@ -1,61 +1,65 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 
 export default function Footer() {
+  const { t } = useTranslation();
+
   return (
     <footer className="bg-obsidian text-parchment pt-20 pb-12 border-t border-graphite/20">
       <div className="max-w-7xl mx-auto px-6 md:px-12 grid grid-cols-1 md:grid-cols-12 gap-12 pb-16 border-b border-graphite/30">
-        
+
         {/* Brand Info */}
         <div className="md:col-span-5 space-y-4">
           <h2 className="text-xl font-medium tracking-caps uppercase text-gallery">
             Aura<span className="text-ashGray font-light">Journeys</span>
           </h2>
           <p className="text-ashGray text-sm max-w-sm font-light leading-relaxed">
-            Crafting intentional, bespoke travel experiences for those who seek depth, quiet luxury, and authentic cultural immersion.
+            {t('footer.about')}
           </p>
         </div>
 
         {/* Quick Links */}
         <div className="md:col-span-3 space-y-4">
-          <h3 className="text-xs uppercase tracking-caps text-ashGray font-mono">Navigation</h3>
+          <h3 className="text-xs uppercase tracking-caps text-ashGray font-mono">{t('footer.navigation')}</h3>
           <ul className="space-y-2 text-sm font-light">
             <li>
-              <Link to="/destinations" className="hover:text-gallery transition-colors">Destinations</Link>
+              <Link to="/destinations" className="hover:text-gallery transition-colors">{t('footer.destinations')}</Link>
             </li>
             <li>
-              <Link to="/trips" className="hover:text-gallery transition-colors">Curated Trips</Link>
+              <Link to="/trips" className="hover:text-gallery transition-colors">{t('footer.trips')}</Link>
             </li>
             <li>
-              <Link to="/services" className="hover:text-gallery transition-colors">Services & Bespoke</Link>
+              <Link to="/services" className="hover:text-gallery transition-colors">{t('footer.services')}</Link>
             </li>
             <li>
-              <Link to="/about" className="hover:text-gallery transition-colors">Our Philosophy</Link>
+              <Link to="/about" className="hover:text-gallery transition-colors">{t('footer.philosophy')}</Link>
             </li>
           </ul>
         </div>
 
         {/* Contact & Inquiries */}
         <div className="md:col-span-4 space-y-4">
-          <h3 className="text-xs uppercase tracking-caps text-ashGray font-mono">Inquiries</h3>
+          <h3 className="text-xs uppercase tracking-caps text-ashGray font-mono">{t('footer.inquiries')}</h3>
           <p className="text-sm text-ashGray font-light">
-            Begin your planning journey with a private consultation.
+            {t('footer.inquiriesDesc')}
           </p>
           <Link
             to="/contact"
             className="inline-block text-xs uppercase tracking-caps px-6 py-3 border border-parchment text-parchment hover:bg-parchment hover:text-obsidian transition-all duration-300"
           >
-            Start an Inquiry
+            {t('footer.inquiryBtn')}
           </Link>
         </div>
       </div>
 
       {/* Copyright & Legal */}
       <div className="max-w-7xl mx-auto px-6 md:px-12 pt-8 flex flex-col md:flex-row justify-between items-center text-xs text-ashGray font-mono">
-        <p>&copy; {new Date().getFullYear()} Aura Journeys. All rights reserved.</p>
-        <div className="flex space-x-6 mt-4 md:mt-0">
-          <span className="hover:text-gallery cursor-pointer">Privacy Policy</span>
-          <span className="hover:text-gallery cursor-pointer">Terms of Service</span>
+        <p>&copy; {new Date().getFullYear()} {t('footer.rights')}</p>
+        {/* لا توجد صفحات لهذه الروابط بعد، لذلك تُعرض كنص فقط */}
+        <div className="flex space-x-6 rtl:space-x-reverse mt-4 md:mt-0">
+          <span>{t('footer.privacy')}</span>
+          <span>{t('footer.terms')}</span>
         </div>
       </div>
     </footer>
