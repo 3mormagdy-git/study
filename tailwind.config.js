@@ -15,6 +15,10 @@ module.exports = {
         ashGray: '#919191',
         charcoalDeep: '#070707',
       },
+      letterSpacing: {
+        caps: '0.2em',
+        editorial: '0.05em',
+      },
       fontFamily: {
         sans: ['"Gill Sans"', '"Avenir"', '"Proxima Nova"', 'sans-serif'],
         mono: ['"Fira Mono"', 'monospace'],

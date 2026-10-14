@@ -5,24 +5,23 @@ export default function Reveal({ children, delay = 0 }) {
   const ref = useRef(null);
 
   useEffect(() => {
+    const node = ref.current;
+    if (!node) return;
+
     // مراقبة العنصر عندما يظهر في الشاشة
     const observer = new IntersectionObserver(
       ([entry]) => {
         if (entry.isIntersecting) {
           setIsVisible(true);
-          observer.unobserve(ref.current); // إيقاف المراقبة بعد الظهور الأول
+          observer.unobserve(node); // إيقاف المراقبة بعد الظهور الأول
         }
       },
       { threshold: 0.1 } // يبدأ الظهور عندما يظهر 10% من العنصر
     );
 
-    if (ref.current) {
-      observer.observe(ref.current);
-    }
+    observer.observe(node);
 
-    return () => {
-      if (ref.current) observer.disconnect();
-    };
+    return () => observer.disconnect();
   }, []);
 
   return (

@@ -1,9 +1,24 @@
-import React, { createContext, useContext, useState } from 'react';
+import React, { createContext, useContext, useEffect, useState } from 'react';
 
 const AuthContext = createContext();
 
 export function AuthProvider({ children }) {
-  const [user, setUser] = useState(null); // null تعني أن المستخدم لم يسجل دخوله
+  // null تعني أن المستخدم لم يسجل دخوله
+  const [user, setUser] = useState(() => {
+    try {
+      return JSON.parse(localStorage.getItem('aura_user')) || null;
+    } catch {
+      return null;
+    }
+  });
+
+  useEffect(() => {
+    if (user) {
+      localStorage.setItem('aura_user', JSON.stringify(user));
+    } else {
+      localStorage.removeItem('aura_user');
+    }
+  }, [user]);
 
   const login = (userData) => {
     setUser(userData);

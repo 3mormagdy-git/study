@@ -1,82 +1,87 @@
+// Country and place names live in the locale files (src/locales) under
+// countries.<id> and places.<placeId>.
+import egyptImg from 'assets/img/egypt-giza.jpeg';
+import turkeyImg from 'assets/img/turkey-istanbul.jpeg';
+import italyImg from 'assets/img/italy-rome-colosseum.jpeg';
+import pisaImg from 'assets/img/italy-pisa.jpeg';
+import greeceImg from 'assets/img/greece-santorini.jpeg';
+import thailandImg from 'assets/img/thailand-lagoon.jpeg';
+import indiaImg from 'assets/img/india-taj-mahal.jpeg';
+import icelandImg from 'assets/img/iceland-aurora.jpeg';
+import usaImg from 'assets/img/usa-golden-gate.jpeg';
+
+const unsplash = (id) => `https://images.unsplash.com/${id}?auto=format&fit=crop&w=800&q=80`;
+
+// image     -> cover shown on destination cards (local asset when we have one)
+// tripImage -> default photo for that country's trips (falls back to `image`)
+// featured  -> shown in the Home page destinations section
+// isNew     -> gets the NEW badge
 export const countriesData = [
-    { id: 'egypt', nameEn: 'Egypt', nameAr: 'مصر', image: 'https://images.unsplash.com/photo-1572252009286-268acec5ca0a?auto=format&fit=crop&w=800&q=80' },
-    { id: 'turkey', nameEn: 'Turkey', nameAr: 'تركيا', image: 'https://images.unsplash.com/photo-1541432901042-2d8bd64b4a9b?auto=format&fit=crop&w=800&q=80' },
-    { id: 'france', nameEn: 'France', nameAr: 'فرنسا', image: 'https://images.unsplash.com/photo-1499856871958-5b9627545d1a?auto=format&fit=crop&w=800&q=80' },
-    { id: 'italy', nameEn: 'Italy', nameAr: 'إيطاليا', image: 'https://images.unsplash.com/photo-1523906834658-6e24ef2386f9?auto=format&fit=crop&w=800&q=80' },
-    { id: 'spain', nameEn: 'Spain', nameAr: 'إسبانيا', image: 'https://images.unsplash.com/photo-1539037116277-4db2020280a8?auto=format&fit=crop&w=800&q=80' },
-    { id: 'greece', nameEn: 'Greece', nameAr: 'اليونان', image: 'https://images.unsplash.com/photo-1533105079780-92b9be482077?auto=format&fit=crop&w=800&q=80' },
-    { id: 'uae', nameEn: 'United Arab Emirates', nameAr: 'الإمارات', image: 'https://images.unsplash.com/photo-1512632578888-169bbbc64f33?auto=format&fit=crop&w=800&q=80' },
-    { id: 'japan', nameEn: 'Japan', nameAr: 'اليابان', image: 'https://images.unsplash.com/photo-1493976040374-85c8e12f0c0e?auto=format&fit=crop&w=800&q=80' },
-    { id: 'switzerland', nameEn: 'Switzerland', nameAr: 'سويسرا', image: 'https://images.unsplash.com/photo-1527668752968-14ce70704971?auto=format&fit=crop&w=800&q=80' },
-    { id: 'uk', nameEn: 'United Kingdom', nameAr: 'المملكة المتحدة', image: 'https://images.unsplash.com/photo-1513635269975-59693e2d09aa?auto=format&fit=crop&w=800&q=80' },
-  ];
-  
-  // اترك باقي الملف (tripLocations و tripsData) كما هو دون تغيير
-  
-  // اترك باقي الملف (tripLocations و tripsData) كما هو دون تغيير
-  
-  // Helper function to generate 5 trips per country dynamically to keep code clean, 
-  // resulting in exactly 50 trips.
-  const tripLocations = {
-    egypt: [
-      { en: 'Cairo & Giza', ar: 'القاهرة والجيزة' }, { en: 'Nile Cruise', ar: 'رحلة النيل البحرية' }, 
-      { en: 'Hurghada', ar: 'الغردقة' }, { en: 'Sharm El Sheikh', ar: 'شرم الشيخ' }, { en: 'Luxor & Aswan', ar: 'الأقصر وأسوان' }
-    ],
-    turkey: [
-      { en: 'Istanbul', ar: 'إسطنبول' }, { en: 'Cappadocia', ar: 'كابادوكيا' }, 
-      { en: 'Antalya', ar: 'أنطاليا' }, { en: 'Bodrum', ar: 'بودروم' }, { en: 'Trabzon', ar: 'طرابزون' }
-    ],
-    france: [
-      { en: 'Paris', ar: 'باريس' }, { en: 'Nice', ar: 'نيس' }, 
-      { en: 'Lyon', ar: 'ليون' }, { en: 'Bordeaux', ar: 'بوردو' }, { en: 'Marseille', ar: 'مارسيليا' }
-    ],
-    italy: [
-      { en: 'Rome', ar: 'روما' }, { en: 'Venice', ar: 'البندقية' }, 
-      { en: 'Florence', ar: 'فلورنسا' }, { en: 'Amalfi Coast', ar: 'ساحل أمالفي' }, { en: 'Milan', ar: 'ميلانو' }
-    ],
-    spain: [
-      { en: 'Madrid', ar: 'مدريد' }, { en: 'Barcelona', ar: 'برشلونة' }, 
-      { en: 'Seville', ar: 'إشبيلية' }, { en: 'Valencia', ar: 'فالنسيا' }, { en: 'Ibiza', ar: 'إيبيزا' }
-    ],
-    greece: [
-      { en: 'Athens', ar: 'أثينا' }, { en: 'Santorini', ar: 'سانتوريني' }, 
-      { en: 'Mykonos', ar: 'ميكونوس' }, { en: 'Crete', ar: 'كريت' }, { en: 'Rhodes', ar: 'رودس' }
-    ],
-    uae: [
-      { en: 'Dubai', ar: 'دبي' }, { en: 'Abu Dhabi', ar: 'أبو ظبي' }, 
-      { en: 'Sharjah', ar: 'الشارقة' }, { en: 'Ras Al Khaimah', ar: 'رأس الخيمة' }, { en: 'Fujairah', ar: 'الفجيرة' }
-    ],
-    japan: [
-      { en: 'Tokyo', ar: 'طوكيو' }, { en: 'Kyoto', ar: 'كيوتو' }, 
-      { en: 'Osaka', ar: 'أوساكا' }, { en: 'Hokkaido', ar: 'هوكايدو' }, { en: 'Okinawa', ar: 'أوكيناوا' }
-    ],
-    switzerland: [
-      { en: 'Zurich', ar: 'زيورخ' }, { en: 'Geneva', ar: 'جنيف' }, 
-      { en: 'Lucerne', ar: 'لوسيرن' }, { en: 'Zermatt', ar: 'زيرمات' }, { en: 'Interlaken', ar: 'إنترلاكن' }
-    ],
-    uk: [
-      { en: 'London', ar: 'لندن' }, { en: 'Edinburgh', ar: 'إدنبرة' }, 
-      { en: 'Manchester', ar: 'مانشستر' }, { en: 'Bath', ar: 'باث' }, { en: 'Cornwall', ar: 'كورنوال' }
-    ]
-  };
-  
-  export const tripsData = [];
-  let tripId = 1;
-  
-  countriesData.forEach(country => {
-    tripLocations[country.id].forEach(location => {
-      tripsData.push({
-        id: tripId++,
-        countryId: country.id,
-        countryEn: country.nameEn,
-        countryAr: country.nameAr,
-        titleEn: location.en,
-        titleAr: location.ar,
-        image: country.image, // Inheriting country image for minimal aesthetic
-        durationEn: '5-7 Days',
-        durationAr: '٥-٧ أيام',
-        descEn: `Explore the profound beauty and architectural marvels of ${location.en}.`,
-        descAr: `استكشف الجمال العميق والروائع المعمارية في ${location.ar}.`
-      });
+  { id: 'egypt', image: egyptImg, tripImage: unsplash('photo-1572252009286-268acec5ca0a'), featured: true },
+  { id: 'turkey', image: turkeyImg, tripImage: unsplash('photo-1541432901042-2d8bd64b4a9b'), featured: true },
+  { id: 'france', image: unsplash('photo-1499856871958-5b9627545d1a') },
+  { id: 'italy', image: italyImg, tripImage: unsplash('photo-1523906834658-6e24ef2386f9'), featured: true },
+  { id: 'spain', image: unsplash('photo-1539037116277-4db2020280a8') },
+  { id: 'greece', image: greeceImg, tripImage: unsplash('photo-1533105079780-92b9be482077'), featured: true },
+  { id: 'uae', image: unsplash('photo-1512632578888-169bbbc64f33') },
+  { id: 'japan', image: unsplash('photo-1493976040374-85c8e12f0c0e'), featured: true },
+  { id: 'switzerland', image: unsplash('photo-1527668752968-14ce70704971') },
+  { id: 'uk', image: unsplash('photo-1513635269975-59693e2d09aa') },
+  { id: 'thailand', image: thailandImg, featured: true, isNew: true },
+  { id: 'india', image: indiaImg, featured: true, isNew: true },
+  { id: 'iceland', image: icelandImg, featured: true, isNew: true },
+  { id: 'usa', image: usaImg, isNew: true },
+];
+
+// place(placeId, priceUSD, optionalImage). Prices are indicative per-traveler
+// listing prices in USD and should be replaced with the agency's real rates.
+const place = (placeId, price, image) => ({ placeId, price, image });
+
+const tripLocations = {
+  egypt: [place('cairoGiza', 1450, egyptImg), place('nileCruise', 2200), place('hurghada', 1350), place('sharmElSheikh', 1300), place('luxorAswan', 1900)],
+  turkey: [place('istanbul', 1650, turkeyImg), place('cappadocia', 1800), place('antalya', 1500), place('bodrum', 1700), place('trabzon', 1400)],
+  france: [place('paris', 2400), place('nice', 2600), place('lyon', 2100), place('bordeaux', 2300), place('marseille', 2000)],
+  italy: [place('rome', 2300, italyImg), place('venice', 2700), place('florence', 2500), place('amalfiCoast', 3100), place('milan', 2200), place('pisa', 1900, pisaImg)],
+  spain: [place('madrid', 2000), place('barcelona', 2300), place('seville', 1900), place('valencia', 1800), place('ibiza', 2600)],
+  greece: [place('athens', 1900), place('santorini', 3000, greeceImg), place('mykonos', 3200), place('crete', 2400), place('rhodes', 2200)],
+  uae: [place('dubai', 2800), place('abuDhabi', 2600), place('sharjah', 1700), place('rasAlKhaimah', 2100), place('fujairah', 1900)],
+  japan: [place('tokyo', 3400), place('kyoto', 3300), place('osaka', 2900), place('hokkaido', 3600), place('okinawa', 3100)],
+  switzerland: [place('zurich', 3600), place('geneva', 3500), place('lucerne', 3300), place('zermatt', 4200), place('interlaken', 3700)],
+  uk: [place('london', 2900), place('edinburgh', 2500), place('manchester', 2100), place('bath', 2300), place('cornwall', 2400)],
+  // The new destinations only have one verified local photograph each, so their
+  // trips are chosen to match that photograph (islands, Taj Mahal, aurora, Golden Gate).
+  thailand: [place('phuket', 1900), place('krabi', 1800), place('phiPhi', 2000), place('kohSamui', 2100)],
+  india: [place('agra', 1400), place('goldenTriangle', 1900)],
+  iceland: [place('reykjavik', 3200), place('goldenCircle', 3000), place('southCoast', 3400), place('akureyri', 3300)],
+  usa: [place('sanFrancisco', 3300), place('californiaCoast', 3500), place('napaValley', 3100)],
+};
+
+export const tripsData = [];
+let tripId = 1;
+
+countriesData.forEach((country) => {
+  (tripLocations[country.id] || []).forEach(({ placeId, price, image }) => {
+    tripsData.push({
+      id: tripId++,
+      countryId: country.id,
+      placeId,
+      price,
+      image: image || country.tripImage || country.image,
+      fallbackImage: country.image,
     });
   });
+});
+
+export const tripsById = new Map(tripsData.map((trip) => [trip.id, trip]));
+
+// Returns a positive number, or null when the price is missing or malformed.
+export function getTripPrice(trip) {
+  const price = Number(trip && trip.price);
+  return Number.isFinite(price) && price > 0 ? price : null;
+}
+
+export function getCountrySummary(countryId) {
+  const list = tripsData.filter((trip) => trip.countryId === countryId);
+  const prices = list.map(getTripPrice).filter((price) => price !== null);
+  return { count: list.length, fromPrice: prices.length ? Math.min(...prices) : null };
+}

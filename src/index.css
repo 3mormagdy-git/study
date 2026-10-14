@@ -2,75 +2,18 @@
 @tailwind components;
 @tailwind utilities;
 
+/* Global overflow guards */
 @layer base {
-  html, body {
-    overflow-x: hidden;
-    max-width: 100vw;
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-  }
-
-  img, svg {
-    max-width: 100%;
-    height: auto;
-  }
-}
-
-
-/* ========================================
-   CINEMATIC WORLD MAP & BACKGROUND ANIMATIONS
-   ======================================== */
-
-@keyframes mapCinematicPan {
-  0%, 100% { transform: scale(1) translate(0px, 0px); }
-  50% { transform: scale(1.05) translate(-1.5%, 1%); }
-}
-
-@keyframes pulseDest {
-  0%, 100% { transform: scale(1); opacity: 0.8; }
-  50% { transform: scale(2.2); opacity: 0.2; }
-}
-
-@keyframes drawPathRoute {
-  0% { stroke-dashoffset: 1000; opacity: 0.1; }
-  50% { opacity: 0.5; }
-  100% { stroke-dashoffset: 0; opacity: 0.3; }
-}
-
-@keyframes moveRouteLight {
-  0% { stroke-dasharray: 20 1000; stroke-dashoffset: 1000; opacity: 0; }
-  20% { opacity: 1; }
-  80% { opacity: 1; }
-  100% { stroke-dashoffset: 0; opacity: 0; }
-}
-
-@keyframes atmosphericGlow {
-  0%, 100% { transform: scale(1); opacity: 0.3; }
-  50% { transform: scale(1.15); opacity: 0.5; }
-}
-
-@layer utilities {
-  .animate-map-pan {
-    animation: mapCinematicPan 35s infinite ease-in-out;
-  }
-  .animate-dest-pulse {
-    animation: pulseDest 4s infinite ease-in-out;
-  }
-  .animate-route-draw {
-    animation: drawPathRoute 12s infinite linear;
-  }
-  .animate-route-light {
-    animation: moveRouteLight 8s infinite linear;
-  }
-  .animate-atmosphere {
-    animation: atmosphericGlow 20s infinite ease-in-out;
-  }
-
-  @media (prefers-reduced-motion: reduce) {
-    .animate-map-pan, .animate-dest-pulse, .animate-route-draw, .animate-route-light, .animate-atmosphere {
-      animation: none !important;
-      transform: none !important;
+    html, body {
+      overflow-x: hidden;
+      max-width: 100vw;
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+  
+    img, svg {
+      max-width: 100%;
+      height: auto;
     }
   }
-}
